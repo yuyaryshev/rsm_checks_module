@@ -15,7 +15,7 @@
         "refs": []
     },
     "00000004": {
-        "posAddr": "src/deserializeValidator.ts:12:14:423",
+        "posAddr": "src/deserializeValidator.ts:24:14:847",
         "message": "BabelJs failed to compile validator code! It also didn't provided any specific error for it, failure the reason is unknown!",
         "refs": []
     },
@@ -25,16 +25,8 @@
         "refs": []
     },
     "00000005": {
-        "posAddr": "src/validation_service/api_implementation/updateValidators.ts:16:27:936",
+        "posAddr": "src/validation_service/api_implementation/updateValidators.ts:16:27:962",
         "message": "CURRENT_DEBUG updateValidatorsApi called!",
-        "refs": []
-    },
-    "00001215": {
-        "posAddr": "src/validation_service/validation_service.ts:60:26:1948",
-        "refs": []
-    },
-    "00001216": {
-        "posAddr": "src/validation_service/validation_service.ts:68:30:2207",
         "refs": []
     },
     "00000007": {
@@ -50,6 +42,14 @@
     "00000012": {
         "posAddr": "src/validation_service/validation_service.ts:42:33:1447",
         "message": "Error on server while handling request. Error stack: ${e.stack}",
+        "refs": []
+    },
+    "00001215": {
+        "posAddr": "src/validation_service/validation_service.ts:60:26:1948",
+        "refs": []
+    },
+    "00001216": {
+        "posAddr": "src/validation_service/validation_service.ts:68:30:2207",
         "refs": []
     }
 }

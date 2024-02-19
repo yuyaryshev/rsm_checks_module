@@ -8,6 +8,7 @@ import {
     Integration,
     IntegrationSide,
     Interface,
+    isChildSystemOf,
     Port,
     RsmChangeState,
     System,
@@ -15,6 +16,9 @@ import {
     SystemNetSegment,
     Term,
 } from "../../rsm_types/index.js";
+import { array, boolean, number, optional, string } from "../../../../json-type-validation";
+import { decoderSerializedValidator, ValidationError, ValidatorType } from "../../validator_types/index.js";
+import { isOneOf, rsmSystemId } from "../../helperFuncs.js";
 
 const port = 8340;
 const makeTestServiceOpts: (portOffset: number) => ValidationServiceOpts = (portOffset: number) => {
@@ -26,8 +30,8 @@ const makeTestServiceOpts: (portOffset: number) => ValidationServiceOpts = (port
     };
 };
 
-describe("rsm_checks_module/validation_service/tests/brokenLink.test.ts", () => {
-    it("validateApi - broken link", async function () {
+describe("rsm_checks_module/validation_service/tests/updateValidator.test.ts", () => {
+    it("updateValidator & request1", async function () {
         const testServiceOpts = makeTestServiceOpts(1);
         const validationService = initValidationService(testServiceOpts);
 
@@ -39,6 +43,30 @@ describe("rsm_checks_module/validation_service/tests/brokenLink.test.ts", () => 
             const axiosInstance = axios.create(axiosOpts);
 
             const apiCaller = makeApiCaller(axiosInstance);
+
+            const validator = {
+                validatorId: "add48106-b1c1-4d6f-b02b-e28e251fc2f2",
+                validatorType: "Integration" as const,
+                name: "Чисто пассивные системы",
+                description:
+                    "Чисто пассивные системы не могут никого вызывать, - могут только принимать вызовы. Примеры: базы данных, очереди, ElasticSearch",
+                validatorSourceCode: `(integration: Integration, errors: ValidationError[]) => {
+        for (const integrationSide of integration.sides) {
+            if (integrationSide.system.netSegment !== "WAN") {
+                continue;
+            }
+
+            if (!isOneOf(integrationSide.otherSide.system.netSegment, "WAN", "DMZ")) {
+                errors.push({
+                    errorCode: "VE0006",
+                    object: integration,
+                    additionalMessage: "VALIDATOR WAS UPDATED!"
+                });
+            }
+        }
+    }`,
+            };
+            await apiCaller.updateValidators({ validators: [validator] });
 
             {
                 const request: typeof validateApi.request = {
@@ -106,7 +134,7 @@ describe("rsm_checks_module/validation_service/tests/brokenLink.test.ts", () => 
                             description: "",
                             changeState: "unchanged",
 
-                            port: { id: "sysid_SignModule_port_BROKEN" },
+                            port: { id: "sysid_SignModule_port1" },
                             integrationSides: [{ id: "integrid_1_side1" }],
                             requester: true,
                         },
@@ -176,14 +204,16 @@ describe("rsm_checks_module/validation_service/tests/brokenLink.test.ts", () => 
                 };
 
                 const response = await apiCaller.validate(request);
-                if (response?.errors?.[0]?.additionalMessage?.includes("Error on server while handling request")) {
-                    response.errors[0].additionalMessage = "Error on server while handling request";
-                }
                 expectDeepEqual(response, {
                     errors: [
                         {
-                            errorCode: "VE9003",
-                            additionalMessage: "Error on server while handling request",
+                            errorCode: "VE0005",
+                            objectId: "integrid_1",
+                        },
+                        {
+                            errorCode: "VE0006",
+                            objectId: "integrid_1",
+                            additionalMessage: "VALIDATOR WAS UPDATED!",
                         },
                     ],
                 });

@@ -5,3 +5,5 @@ export function rsmSystemId(systemName: string, id?: string) {
 export function isOneOf<T>(v: T, ...args: T[]) {
     return args.includes(v);
 }
+
+export const envFuncs = { isOneOf, rsmSystemId };

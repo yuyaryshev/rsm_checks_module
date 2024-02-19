@@ -32,12 +32,13 @@ function validateRawObject(rawObject: any) {
 function dedublicateErrors(errors: ValidationErrorFlattened[]): ValidationErrorFlattened[] {
     const errorsAgg: { [key: string]: { [key: string]: ValidationErrorFlattened } } = {};
     for (const e of errors) {
-        if (!errorsAgg[e.objectId]) {
-            errorsAgg[e.objectId] = {};
+        const objectId = e.objectId || "$@undefined";
+        if (!errorsAgg[objectId]) {
+            errorsAgg[objectId] = {};
         }
-        const existingErr = errorsAgg[e.objectId][e.errorCode];
+        const existingErr = errorsAgg[objectId][e.errorCode];
         if (!existingErr) {
-            errorsAgg[e.objectId][e.errorCode] = e;
+            errorsAgg[objectId][e.errorCode] = e;
         } else {
             if (existingErr.additionalMessage !== e.additionalMessage) {
                 if (existingErr.additionalMessage && e.additionalMessage) {
@@ -84,15 +85,17 @@ export function validateApiImpl(env: ServiceApiEnv) {
         const errors0: ValidationError[] = [];
         for (const obj of reconstructedObjectsArray) {
             for (const [validatorId, validator] of validatorsMap) {
-                try {
-                    await validator.validatorFunc(obj, errors0);
-                } catch (e: any) {
-                    const ve: ValidationError = {
-                        errorCode: "VE9002",
-                        object: obj,
-                        additionalMessage: e.status,
-                    };
-                    errors0.push();
+                if (validator.validatorType === obj.type) {
+                    try {
+                        await validator.validatorFunc(obj, errors0);
+                    } catch (e: any) {
+                        const ve: ValidationError = {
+                            errorCode: "VE9002",
+                            object: obj,
+                            additionalMessage: e.status,
+                        };
+                        errors0.push();
+                    }
                 }
             }
         }

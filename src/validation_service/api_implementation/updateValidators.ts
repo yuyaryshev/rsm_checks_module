@@ -1,6 +1,6 @@
 import { httpApiDefinition, httpApiFunction } from "yhttp_api";
 import { object, string, number, array, anyJson } from "yuyaryshev-json-type-validation";
-import { decoderValidationErrorFlattened, flattenValidationError, ValidationError } from "../../validator_types/index.js";
+import { decoderValidationErrorFlattened, flattenValidationError, ValidationError, ValidationErrorFlattened } from "../../validator_types/index.js";
 import { implementHttpExpressApi } from "yhttp_api_express";
 import { reconstructObjectsArray, updateValidatorsApi } from "../../api/index.js";
 import type { ServiceApiEnv } from "../ServiceApiEnv.js";
@@ -15,7 +15,7 @@ export function updateValidatorsApiImpl(env: ServiceApiEnv) {
         async (req: typeof updateValidatorsApi.request): Promise<typeof updateValidatorsApi.response> => {
             console.warn(`CODE00000005 CURRENT_DEBUG updateValidatorsApi called!`);
 
-            const reconstructedObjectsArray = reconstructObjectsArray(req.validators);
+            const errors: ValidationErrorFlattened[] = [];
 
             for (const serializedValidator of req.validators) {
                 try {
@@ -25,10 +25,16 @@ export function updateValidatorsApiImpl(env: ServiceApiEnv) {
                     } else {
                         validatorsMap.set(serializedValidator.validatorId, deserializedValidator);
                     }
-                } catch (e: any) {}
+                } catch (e: any) {
+                    errors.push({
+                        errorCode: "VE9003",
+                        objectId: undefined,
+                        additionalMessage: e.stack,
+                    });
+                }
             }
 
-            const r: typeof updateValidatorsApi.response = {};
+            const r: typeof updateValidatorsApi.response = { errors };
             return r;
         },
     );
