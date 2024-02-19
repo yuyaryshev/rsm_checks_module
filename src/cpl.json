@@ -1,0 +1,40 @@
+{
+    "00000001": {
+        "posAddr": "src/api/reconstructObjectsArray.ts:13:34:596",
+        "message": "ReconstructObject failed for path=${JSON.stringify([...path, i])} id='${obj[i].id}' - not found!",
+        "refs": []
+    },
+    "00000002": {
+        "posAddr": "src/api/reconstructObjectsArray.ts:45:26:1701",
+        "message": "ERROR reconstructObjectsArray failed - array expected!",
+        "refs": []
+    },
+    "00000003": {
+        "posAddr": "src/api/reconstructObjectsArray.ts:52:30:1907",
+        "message": "ERROR reconstructObjectsArray failed! Array contains elements without id!",
+        "refs": []
+    },
+    "00000004": {
+        "posAddr": "src/deserializeValidator.ts:12:14:423",
+        "message": "BabelJs failed to compile validator code! It also didn't provided any specific error for it, failure the reason is unknown!",
+        "refs": []
+    },
+    "00000005": {
+        "posAddr": "src/validation_service/api_implementation/updateValidators.ts:16:27:936",
+        "message": "CURRENT_DEBUG updateValidatorsApi called!",
+        "refs": []
+    },
+    "00000006": {
+        "posAddr": "src/validation_service/api_implementation/validate.ts:14:23:923",
+        "message": "CURRENT_DEBUG validateApi called!",
+        "refs": []
+    },
+    "00001215": {
+        "posAddr": "src/validation_service/validation_service.ts:48:26:1412",
+        "refs": []
+    },
+    "00001216": {
+        "posAddr": "src/validation_service/validation_service.ts:56:30:1671",
+        "refs": []
+    }
+}

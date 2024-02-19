@@ -1,0 +1,33 @@
+import type { Integration, IntegrationSide } from "./Integration.js";
+// import type {Interface} from "./Interface.js";
+import type { Port } from "./Port.js";
+import type { System } from "./System.js";
+import type { Term } from "./Term.js";
+import type { RsmObjectWithName } from "./RsmObject.js";
+import type { RsmChangeState } from "./RsmChangeState.js";
+import { array, boolean, constant, Decoder, object } from "yuyaryshev-json-type-validation";
+import { decoderARGRsmObjectWithName, decoderRsmObjectRef } from "./RsmObject.js";
+import { IntegrationPoor } from "./Integration.js";
+
+export interface InterfacePoor extends RsmObjectWithName {
+    type: "Interface";
+
+    requester: boolean;
+    port: Port;
+    integrationSides: IntegrationSide[];
+}
+export const decoderInterfacePoor: Decoder<InterfacePoor> = object({
+    ...decoderARGRsmObjectWithName,
+    type: constant("Interface"),
+    requester: boolean(),
+
+    port: decoderRsmObjectRef("Port"),
+    integrationSides: array(decoderRsmObjectRef("IntegrationSide")),
+});
+
+export interface Interface extends InterfacePoor {
+    // Enriched attributes
+    integrations: Integration[];
+    system: System;
+    term: Term;
+}
