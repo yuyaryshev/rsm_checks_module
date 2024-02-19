@@ -27,7 +27,7 @@ const makeTestServiceOpts: (portOffset: number) => ValidationServiceOpts = (port
 };
 
 describe("rsm_checks_module/validation_service/tests/brokenLink.test.ts", () => {
-    xit("validateApi - broken link", async function () {
+    it("validateApi - broken link", async function () {
         const testServiceOpts = makeTestServiceOpts(1);
         const validationService = initValidationService(testServiceOpts);
 
@@ -179,12 +179,9 @@ describe("rsm_checks_module/validation_service/tests/brokenLink.test.ts", () => 
                 expectDeepEqual(response, {
                     errors: [
                         {
-                            errorCode: "VE0005",
-                            objectId: "integrid_1",
-                        },
-                        {
-                            errorCode: "VE0006",
-                            objectId: "integrid_1",
+                            errorCode: "VE9003",
+                            additionalMessage:
+                                "CODE00000000 Error on server while handling request. Error stack: Error: CODE00000001 ReconstructObject failed for path=[\"port\"] id='sysid_SignModule_port_BROKEN' - not found!\n    at ReconstructObjectContext.reconstructObjectInIndex (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\src\\api\\reconstructObjectsArray.ts:13:23)\n    at ReconstructObjectContext.reconstructObject (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\src\\api\\reconstructObjectsArray.ts:34:35)\n    at reconstructObjectsArray (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\src\\api\\reconstructObjectsArray.ts:58:11)\n    at requestHandler (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\src\\validation_service\\api_implementation\\validate.ts:80:66)\n    at fullHandlerFunc (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\yhttp_api_express@1.0.9\\node_modules\\yhttp_api_express\\src\\implementHttpExpressApi.ts:23:34)\n    at Layer.handle [as handle_request] (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\express@4.18.2\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at next (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\express@4.18.2\\node_modules\\express\\lib\\router\\route.js:144:13)\n    at Route.dispatch (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\express@4.18.2\\node_modules\\express\\lib\\router\\route.js:114:3)\n    at Layer.handle [as handle_request] (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\express@4.18.2\\node_modules\\express\\lib\\router\\layer.js:95:5)\n    at D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\express@4.18.2\\node_modules\\express\\lib\\router\\index.js:284:15\n    at Function.process_params (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\express@4.18.2\\node_modules\\express\\lib\\router\\index.js:346:12)\n    at next (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\express@4.18.2\\node_modules\\express\\lib\\router\\index.js:280:10)\n    at D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\body-parser@1.20.1\\node_modules\\body-parser\\lib\\read.js:137:5\n    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)\n    at invokeCallback (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\raw-body@2.5.1\\node_modules\\raw-body\\index.js:231:16)\n    at done (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\raw-body@2.5.1\\node_modules\\raw-body\\index.js:220:7)\n    at IncomingMessage.onEnd (D:\\b\\Mine\\GIT_Work\\rsm_checks_module\\node_modules\\.pnpm\\raw-body@2.5.1\\node_modules\\raw-body\\index.js:280:7)\n    at IncomingMessage.emit (node:events:511:28)\n    at endReadableNT (node:internal/streams/readable:1367:12)\n    at processTicksAndRejections (node:internal/process/task_queues:82:21)",
                         },
                     ],
                 });

@@ -19,37 +19,37 @@
         "message": "BabelJs failed to compile validator code! It also didn't provided any specific error for it, failure the reason is unknown!",
         "refs": []
     },
-    "00000005": {
-        "posAddr": "src/validation_service/api_implementation/updateValidators.ts:16:27:936",
-        "message": "CURRENT_DEBUG updateValidatorsApi called!",
-        "refs": []
-    },
-    "00000006": {
-        "posAddr": "src/validation_service/api_implementation/validate.ts:62:23:2632",
-        "message": "CURRENT_DEBUG validateApi called!",
-        "refs": []
-    },
-    "00001215": {
-        "posAddr": "src/validation_service/validation_service.ts:48:26:1412",
-        "refs": []
-    },
-    "00001216": {
-        "posAddr": "src/validation_service/validation_service.ts:56:30:1671",
-        "refs": []
-    },
     "00000008": {
         "posAddr": "src/rsm_types/normalizeDataLinks.ts:34:34:1349",
         "message": "rsm_checks_module.normalizeDataLinks doesn't support object.type='${object.type}'",
         "refs": []
     },
-    "00000009": {
-        "posAddr": "src/validation_service/api_implementation/validate.ts:21:26:955",
+    "00000005": {
+        "posAddr": "src/validation_service/api_implementation/updateValidators.ts:16:27:936",
+        "message": "CURRENT_DEBUG updateValidatorsApi called!",
+        "refs": []
+    },
+    "00001215": {
+        "posAddr": "src/validation_service/validation_service.ts:60:26:1948",
+        "refs": []
+    },
+    "00001216": {
+        "posAddr": "src/validation_service/validation_service.ts:68:30:2207",
+        "refs": []
+    },
+    "00000007": {
+        "posAddr": "src/validation_service/api_implementation/validate.ts:22:26:1008",
         "message": "В объекте id=${rawObject.id || \"undefined\"} отсутствует поле type!",
         "refs": []
     },
-    "00000010": {
-        "posAddr": "src/validation_service/api_implementation/validate.ts:25:26:1155",
+    "00000011": {
+        "posAddr": "src/validation_service/api_implementation/validate.ts:26:26:1208",
         "message": "Тип объекта не поддерживается сервисом type=${rawObject.type}, id=${rawObject.id || \"undefined\"}!",
+        "refs": []
+    },
+    "00000012": {
+        "posAddr": "src/validation_service/validation_service.ts:42:33:1447",
+        "message": "Error on server while handling request. Error stack: ${e.stack}",
         "refs": []
     }
 }

@@ -13,6 +13,7 @@ import type { ServiceApiEnv } from "../ServiceApiEnv.js";
 import { validatorsMap } from "../../validators/index.js";
 import { decoderAllowedRsmObject, decoderByObjectType } from "../../rsm_types/decoderRsmObject.js";
 import { enrichData, RsmObject, RsmObjectWithName } from "../../rsm_types/index.js";
+import { a } from "vite/dist/node/types.d-jgA8ss1A";
 
 export interface InvalidApiCallError extends ValidationErrorFlattened {}
 
@@ -59,8 +60,6 @@ function dedublicateErrors(errors: ValidationErrorFlattened[]): ValidationErrorF
 
 export function validateApiImpl(env: ServiceApiEnv) {
     implementHttpExpressApi(env.apiRoot, validateApi, async (req: typeof validateApi.request): Promise<typeof validateApi.response> => {
-        console.warn(`CODE00000006 CURRENT_DEBUG validateApi called!`);
-
         const invalidApiCallErrors: InvalidApiCallError[] = [];
         for (const rawObject of req.objects) {
             try {

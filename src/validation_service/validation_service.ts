@@ -5,6 +5,8 @@ import { CallerUrlOpts } from "../api/index.js";
 import { a } from "vite/dist/node/types.d-jgA8ss1A";
 import { ServiceApiEnv } from "./ServiceApiEnv.js";
 import { publishValidatorApis } from "./api_implementation/index.js";
+import { YHttpResponse } from "yhttp_api_express/src/implementerLib";
+import { ValidationErrorFlattened } from "../validator_types/index.js";
 
 export const defaultValidationServiceOpts = {
     virtualFolder: "/api/",
@@ -33,9 +35,19 @@ export function initValidationService(opts0: ValidationServiceOpts0) {
     const httpServerApp = express();
     httpServerApp.use(express.json());
 
+    async function onExceptionHandler(req: any, res: any, e: any, response: YHttpResponse) {
+        const r: ValidationErrorFlattened = {
+            errorCode: "VE9003",
+            objectId: undefined,
+            additionalMessage: `CODE00000000 Error on server while handling request. Error stack: ${e.stack}`,
+        };
+        return { errors: [r] };
+    }
+
     const apiRoot: ApiRoot = {
         httpServerApp,
         virtualFolder: opts.virtualFolder,
+        onExceptionHandler,
     };
 
     const apiPrereq: ServiceApiEnv = { apiRoot };

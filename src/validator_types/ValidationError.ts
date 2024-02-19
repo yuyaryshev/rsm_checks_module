@@ -12,6 +12,7 @@ export const validationErrorCodes = {
     VE0008: "Должен присутствовать CL2, если есть Альфа-мобайл",
     VE9001: "Некорректный вызов Api - в переданном объекте отсутствуют или не корректны какие-то поля. См additionalMessage для более подробного описания.",
     VE9002: "Ошибка (Exception) внутри функции валидатора.",
+    VE9003: "Не обработаннй Exception на сервере при обработке запроса.",
 };
 
 export type ValidationErrorCode = keyof typeof validationErrorCodes;
@@ -24,13 +25,13 @@ export interface ValidationError {
 
 export interface ValidationErrorFlattened {
     errorCode: string;
-    objectId: RsmObjectId; // Объект на котором нужно показать ошибку
+    objectId?: RsmObjectId | undefined; // Объект на котором нужно показать ошибку
     additionalMessage?: string;
 }
 
 export const decoderValidationErrorFlattened: Decoder<ValidationErrorFlattened> = object({
     errorCode: string(),
-    objectId: decoderRsmObjectId,
+    objectId: optional(decoderRsmObjectId),
     additionalMessage: optional(string()),
 });
 
