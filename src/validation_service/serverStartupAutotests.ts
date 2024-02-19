@@ -1,6 +1,6 @@
 import axios from "axios";
 import { httpApiFunction } from "yhttp_api";
-import { expectDeepEqual } from "../../../ystd";
+import { expectDeepEqual } from "ystd";
 import { ValidationServiceOpts } from "./validation_service.js";
 import { makeApiCaller, makeCallerUrl } from "../api/index.js";
 

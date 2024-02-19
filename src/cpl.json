@@ -25,7 +25,7 @@
         "refs": []
     },
     "00000006": {
-        "posAddr": "src/validation_service/api_implementation/validate.ts:14:23:923",
+        "posAddr": "src/validation_service/api_implementation/validate.ts:62:23:2632",
         "message": "CURRENT_DEBUG validateApi called!",
         "refs": []
     },
@@ -35,6 +35,21 @@
     },
     "00001216": {
         "posAddr": "src/validation_service/validation_service.ts:56:30:1671",
+        "refs": []
+    },
+    "00000008": {
+        "posAddr": "src/rsm_types/normalizeDataLinks.ts:34:34:1349",
+        "message": "rsm_checks_module.normalizeDataLinks doesn't support object.type='${object.type}'",
+        "refs": []
+    },
+    "00000009": {
+        "posAddr": "src/validation_service/api_implementation/validate.ts:21:26:955",
+        "message": "В объекте id=${rawObject.id || \"undefined\"} отсутствует поле type!",
+        "refs": []
+    },
+    "00000010": {
+        "posAddr": "src/validation_service/api_implementation/validate.ts:25:26:1155",
+        "message": "Тип объекта не поддерживается сервисом type=${rawObject.type}, id=${rawObject.id || \"undefined\"}!",
         "refs": []
     }
 }

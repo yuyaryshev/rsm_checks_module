@@ -9,6 +9,15 @@ import { decoderRsmChangeState } from "./RsmChangeState.js";
 
 export type AllowedRsmObject = SystemPoor | PortPoor | TermPoor | InterfacePoor | IntegrationPoor | IntegrationSidePoor;
 
+export const decoderByObjectType = {
+    System: decoderSystemPoor,
+    Port: decoderPortPoor,
+    Term: decoderTermPoor,
+    Interface: decoderInterfacePoor,
+    Integration: decoderIntegrationPoor,
+    IntegrationSide: decoderIntegrationSidePoor,
+};
+
 export const decoderAllowedRsmObject: Decoder<AllowedRsmObject> = oneOf<AllowedRsmObject>(
     decoderSystemPoor,
     decoderPortPoor,

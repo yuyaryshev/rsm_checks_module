@@ -9,6 +9,7 @@ import { pushNewValues } from "../pushNewValues.js";
 import { array, constant, Decoder, object, oneOf, optional } from "yuyaryshev-json-type-validation";
 import { decoderARGRsmObjectWithName, decoderRsmObjectRef } from "./RsmObject.js";
 import { PortPoor } from "./Port.js";
+import { a } from "vite/dist/node/types.d-jgA8ss1A";
 
 export type SystemFlag = "pure_passive" | "pure_active" | "deprecated" | "locked_ports" | "locked_interfaces";
 export const decoderSystemFlag: Decoder<SystemFlag> = oneOf<SystemFlag>(
@@ -36,6 +37,12 @@ export interface SystemPoor extends RsmObjectWithName {
     parentSystem?: System;
     ports: Port[];
 }
+export function System_normalizeLinks(sys: SystemPoor) {
+    for (const port of sys.ports) {
+        port.system = sys as any;
+    }
+}
+
 export const decoderSystemPoor: Decoder<SystemPoor> = object({
     ...decoderARGRsmObjectWithName,
     type: constant("System"),

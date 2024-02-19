@@ -11,6 +11,7 @@ export const validationErrorCodes = {
     VE0007: "Проверка наличия интеграции с ArchSite хотя бы в одном из виженов",
     VE0008: "Должен присутствовать CL2, если есть Альфа-мобайл",
     VE9001: "Некорректный вызов Api - в переданном объекте отсутствуют или не корректны какие-то поля. См additionalMessage для более подробного описания.",
+    VE9002: "Ошибка (Exception) внутри функции валидатора.",
 };
 
 export type ValidationErrorCode = keyof typeof validationErrorCodes;

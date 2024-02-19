@@ -7,11 +7,13 @@ import type { RsmChangeState } from "./RsmChangeState.js";
 import { array, constant, Decoder, object, optional } from "yuyaryshev-json-type-validation";
 import { decoderARGRsmObjectWithName, decoderRsmObjectRef } from "./RsmObject.js";
 import { decoderSystemFlag, decoderSystemNetSegment, SystemPoor } from "./System.js";
+import { IntegrationSidePoor } from "./Integration.js";
 // import type {Term} from "./Term.js";
 
 export interface TermPoor extends RsmObjectWithName {
     type: "Term";
 }
+export function Term_normalizeLinks(term: TermPoor) {}
 
 export interface Term extends TermPoor {}
 export const decoderTermPoor: Decoder<TermPoor> = object({

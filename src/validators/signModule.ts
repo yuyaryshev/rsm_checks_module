@@ -11,7 +11,7 @@ export const signModuleValidator: SystemValidator = {
         if (sys.name === "SignModule") {
             for (const integration of sys.integrations) {
                 for (const integrationSide of integration.sides) {
-                    if (isChildSystemOf(integrationSide.system, rsmSystemId("SignModule", "какой-то GUID"))) {
+                    if (isChildSystemOf(integrationSide.system, rsmSystemId("SignModule", "sysid_SignModule"))) {
                         continue;
                     }
 

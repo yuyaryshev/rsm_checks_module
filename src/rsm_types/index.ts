@@ -8,4 +8,5 @@ export * from "./System.js";
 export * from "./Term.js";
 export * from "./decoderRsmObject.js";
 export * from "./enrichData.js";
+export * from "./normalizeDataLinks.js";
 // @INPRINT_END

@@ -1,9 +1,20 @@
 import { expectDeepEqual } from "ystd";
-import { initValidationService, ValidationServiceOpts } from "./validation_service.js";
+import { initValidationService, ValidationServiceOpts } from "../validation_service.js";
 import axios from "axios";
-import { makeApiCaller, makeCallerUrl, validateApi } from "../api/index.js";
-import { a } from "vite/dist/node/types.d-jgA8ss1A";
-import { Integration, IntegrationSide, Interface, Port, RsmChangeState, System, SystemFlag, SystemNetSegment, Term } from "../rsm_types/index.js";
+import { makeApiCaller, makeCallerUrl, validateApi } from "../../api/index.js";
+import {
+    decoderIntegrationPoor,
+    decoderSystemPoor,
+    Integration,
+    IntegrationSide,
+    Interface,
+    Port,
+    RsmChangeState,
+    System,
+    SystemFlag,
+    SystemNetSegment,
+    Term,
+} from "../../rsm_types/index.js";
 
 const port = 8340;
 const makeTestServiceOpts: (portOffset: number) => ValidationServiceOpts = (portOffset: number) => {
@@ -15,8 +26,8 @@ const makeTestServiceOpts: (portOffset: number) => ValidationServiceOpts = (port
     };
 };
 
-describe("rsm_checks_module/validation_service/validationService.test.ts", () => {
-    it.only("validateApi - request1", async function () {
+describe("rsm_checks_module/validation_service/tests/request1.test.ts", () => {
+    it("validateApi - request1", async function () {
         const testServiceOpts = makeTestServiceOpts(1);
         const validationService = initValidationService(testServiceOpts);
 
@@ -73,10 +84,31 @@ describe("rsm_checks_module/validation_service/validationService.test.ts", () =>
                             flags: [],
                             netSegment: "LAN",
 
-                            ports: [],
+                            ports: [{ id: "sysid_SignModule_port1" }],
                             interfaces: [],
                             integrations: [],
                             integrationSides: [],
+                        },
+                        {
+                            id: "sysid_SignModule_port1",
+                            type: "Port",
+                            name: "Port1",
+                            description: "",
+                            changeState: "unchanged",
+
+                            system: { id: "sysid_SignModule" },
+                            interfaces: [{ id: "sysid_SignModule_ifc1" }],
+                        },
+                        {
+                            id: "sysid_SignModule_ifc1",
+                            type: "Interface",
+                            name: "Ifc1",
+                            description: "",
+                            changeState: "unchanged",
+
+                            port: { id: "sysid_SignModule_port1" },
+                            integrationSides: [{ id: "integrid_1_side1" }],
+                            requester: true,
                         },
                         {
                             id: "sysid_PartnerSystem",
@@ -94,63 +126,71 @@ describe("rsm_checks_module/validation_service/validationService.test.ts", () =>
                             integrationSides: [],
                         },
                         {
+                            id: "sysid_PartnerSystem_port1",
+                            type: "Port",
+                            name: "Port1",
+                            description: "",
+                            changeState: "unchanged",
+
+                            system: { id: "sysid_PartnerSystem" },
+                            interfaces: [{ id: "sysid_PartnerSystem_ifc5" }],
+                        },
+                        {
+                            id: "sysid_PartnerSystem_ifc5",
+                            type: "Interface",
+                            name: "Ifc5",
+                            description: "",
+                            changeState: "unchanged",
+
+                            port: { id: "sysid_PartnerSystem_port1" },
+                            integrationSides: [{ id: "integrid_1_side1" }],
+                            requester: true,
+                        },
+                        {
                             type: "Integration",
                             id: "integrid_1",
                             name: "Кривая интеграция",
 
                             changeState: "unchanged",
-
-                            source: {
-                                type: "IntegrationSide",
-                                system: { id: "sysid_SignModule" },
-                                // port: Port;
-                                // term: Term;
-                                // ifc: Interface;
-                                integration: { id: "integrid_1" },
-                            },
-                            target: {
-                                type: "IntegrationSide",
-                                system: { id: "sysid_PartnerSystem" },
-                                // port: Port;
-                                // term: Term;
-                                // ifc: Interface;
-                                integration: { id: "integrid_1" },
-                            },
+                            source: { id: "integrid_1_side1" },
+                            target: { id: "integrid_1_side2" },
                         } as Integration,
+                        {
+                            id: "integrid_1_side1",
+                            type: "IntegrationSide",
+                            system: { id: "sysid_SignModule" },
+                            integration: { id: "integrid_1" },
+                            ifc: { id: "sysid_SignModule_ifc1" },
+                        },
+                        {
+                            id: "integrid_1_side2",
+                            type: "IntegrationSide",
+                            system: { id: "sysid_PartnerSystem" },
+                            // port: Port;
+                            // term: Term;
+                            // ifc: Interface;
+                            ifc: { id: "sysid_PartnerSystem_ifc5" },
+                            integration: { id: "integrid_1" },
+                        },
                     ],
                 };
+
                 const response = await apiCaller.validate(request);
-                expectDeepEqual(response, { errors: ["tbd"] } as any);
+                expectDeepEqual(response, {
+                    errors: [
+                        {
+                            errorCode: "VE0005",
+                            objectId: "integrid_1",
+                        },
+                        {
+                            errorCode: "VE0006",
+                            objectId: "integrid_1",
+                        },
+                    ],
+                });
             }
             //        } catch (e: any) {
             //            throw e;
-        } finally {
-            validationService?.stop();
-        }
-    });
-
-    it("validateApi - empty request", async function () {
-        const testServiceOpts = makeTestServiceOpts(0);
-        const validationService = initValidationService(testServiceOpts);
-
-        try {
-            await validationService.start();
-            const axiosOpts = {
-                baseURL: makeCallerUrl(testServiceOpts),
-            };
-            const axiosInstance = axios.create(axiosOpts);
-
-            const apiCaller = makeApiCaller(axiosInstance);
-
-            {
-                // Test with empty request first
-                const request: typeof validateApi.request = { objects: [] };
-                const response = await apiCaller.validate(request);
-                expectDeepEqual(response, { errors: [] });
-            }
-
-            // } catch (e: any) {
-            //     throw e;
         } finally {
             validationService?.stop();
         }

@@ -8,6 +8,8 @@ import type { RsmChangeState } from "./RsmChangeState.js";
 import { array, boolean, constant, Decoder, object, optional } from "yuyaryshev-json-type-validation";
 import { decoderARGRsmObjectWithName, decoderRsmObjectRef } from "./RsmObject.js";
 import { InterfacePoor } from "./Interface.js";
+import { SystemPoor } from "./System.js";
+import { pushNewValues } from "../pushNewValues.js";
 
 export interface PortPoor extends RsmObjectWithName {
     type: "Port";
@@ -16,6 +18,13 @@ export interface PortPoor extends RsmObjectWithName {
     term: Term;
     interfaces: Interface[];
 }
+export function Port_normalizeLinks(port: PortPoor) {
+    pushNewValues(port.system, "ports", port as any);
+    for (const ifc of port.interfaces) {
+        ifc.port = port as any;
+    }
+}
+
 export const decoderPortPoor: Decoder<PortPoor> = object({
     ...decoderARGRsmObjectWithName,
     type: constant("Port"),
