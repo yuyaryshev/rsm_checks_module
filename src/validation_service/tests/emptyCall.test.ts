@@ -42,7 +42,7 @@ describe("rsm_checks_module/validation_service/tests/emptyCall.test.ts", () => {
 
             {
                 // Test with empty request first
-                const request: typeof validateApi.request = { objects: [] };
+                const request: typeof validateApi.request = { validatorSet: "before_vision_approval", objects: [] };
                 const response = await apiCaller.validate(request);
                 expectDeepEqual(response, { errors: [] });
             }

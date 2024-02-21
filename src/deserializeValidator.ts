@@ -18,7 +18,7 @@ function compileSourceCode(sourceCode: string, validatorNameOrId: string): strin
         ],
     };
 
-    const { code } = BabelJs.transformSync(sourceCode, babelOptions) || { code: "" };
+    const { code } = BabelJs.transformSync(sourceCode, babelOptions as any) || { code: "" };
     if (!code) {
         throw new Error(
             `CODE00000004 BabelJs failed to compile validator code! It also didn't provided any specific error for it, failure the reason is unknown!`,

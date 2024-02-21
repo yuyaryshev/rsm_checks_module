@@ -4,6 +4,7 @@ import type { System } from "../rsm_types/index.js";
 export const lockedSystemValidator: SystemValidator = {
     validatorId: "d9bb4719-8c98-4d03-bfd2-e7ba58d4b703",
     validatorType: "System",
+    validatorSets: ["before_vision_approval"],
     name: "Чисто пассивные системы",
     description: "Чисто пассивные системы не могут никого вызывать, - могут только принимать вызовы. Примеры: базы данных, очереди, ElasticSearch",
     validatorFunc: (sys: System, errors: ValidationError[]) => {

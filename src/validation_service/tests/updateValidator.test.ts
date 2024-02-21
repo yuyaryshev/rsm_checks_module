@@ -47,6 +47,7 @@ describe("rsm_checks_module/validation_service/tests/updateValidator.test.ts", (
             const validator = {
                 validatorId: "add48106-b1c1-4d6f-b02b-e28e251fc2f2",
                 validatorType: "Integration" as const,
+                validatorSets: ["before_vision_approval"],
                 name: "Чисто пассивные системы",
                 description:
                     "Чисто пассивные системы не могут никого вызывать, - могут только принимать вызовы. Примеры: базы данных, очереди, ElasticSearch",
@@ -70,6 +71,7 @@ describe("rsm_checks_module/validation_service/tests/updateValidator.test.ts", (
 
             {
                 const request: typeof validateApi.request = {
+                    validatorSet: "before_vision_approval",
                     objects: [
                         {
                             id: "sysid_NIB",

@@ -85,7 +85,7 @@ export function validateApiImpl(env: ServiceApiEnv) {
         const errors0: ValidationError[] = [];
         for (const obj of reconstructedObjectsArray) {
             for (const [validatorId, validator] of validatorsMap) {
-                if (validator.validatorType === obj.type) {
+                if (validator.validatorType === obj.type && validator.validatorSets.includes(req.validatorSet)) {
                     try {
                         await validator.validatorFunc(obj, errors0);
                     } catch (e: any) {

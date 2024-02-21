@@ -8,6 +8,7 @@ export const validateApi = httpApiDefinition(
         // Includes fields from JSON body, also includes headers. Body owerwrite header fields
         //t:"example",
         objects: array(anyJson()),
+        validatorSet: string(),
     },
     {
         errors: array(decoderValidationErrorFlattened),

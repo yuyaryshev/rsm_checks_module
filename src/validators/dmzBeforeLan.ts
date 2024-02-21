@@ -5,6 +5,7 @@ import { isOneOf } from "../helperFuncs.js";
 export const dmzBeforeLanValidator: IntegrationValidator = {
     validatorId: "add48106-b1c1-4d6f-b02b-e28e251fc2f2",
     validatorType: "Integration",
+    validatorSets: ["before_vision_approval"],
     name: "Чисто пассивные системы",
     description: "Чисто пассивные системы не могут никого вызывать, - могут только принимать вызовы. Примеры: базы данных, очереди, ElasticSearch",
     validatorFunc: (integration: Integration, errors: ValidationError[]) => {

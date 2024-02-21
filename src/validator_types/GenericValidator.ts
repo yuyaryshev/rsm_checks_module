@@ -15,6 +15,7 @@ export const decoderValidatorType = oneOf<ValidatorType>(
 export const decoderFIELDS_GenericValidatorHeader = {
     validatorId: oneOf<string | number>(string(), number()),
     validatorType: decoderValidatorType,
+    validatorSets: array(string()),
     name: string(),
     description: optional(string()),
 };
@@ -22,6 +23,7 @@ export const decoderFIELDS_GenericValidatorHeader = {
 export interface GenericValidatorHeader {
     validatorId: string | number;
     validatorType: ValidatorType;
+    validatorSets: string[];
     name: string;
     description?: string;
 }

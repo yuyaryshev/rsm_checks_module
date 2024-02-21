@@ -4,6 +4,7 @@ import type { System } from "../rsm_types/index.js";
 export const deprecatedSystemValidator: SystemValidator = {
     validatorId: "04719dee-c207-41e0-8421-48c376e84df2",
     validatorType: "System",
+    validatorSets: ["before_vision_approval"],
     name: "Deprecated system",
     description: "Deprecated system - система под вывод - нельзя дорабатывать",
     validatorFunc: (sys: System, errors: ValidationError[]) => {

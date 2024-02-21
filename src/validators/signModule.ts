@@ -5,8 +5,9 @@ import { rsmSystemId } from "../helperFuncs.js";
 export const signModuleValidator: SystemValidator = {
     validatorId: "2e5d8393-b3fc-4917-aa4c-b3b0e0c3d3d5",
     validatorType: "System",
-    name: "Чисто пассивные системы",
-    description: "Чисто пассивные системы не могут никого вызывать, - могут только принимать вызовы. Примеры: базы данных, очереди, ElasticSearch",
+    validatorSets: ["before_vision_approval"],
+    name: "SignModule можно интегрировать только с НИБ",
+    description: "SignModule можно интегрировать только с НИБ",
     validatorFunc: (sys: System, errors: ValidationError[]) => {
         if (sys.name === "SignModule") {
             for (const integration of sys.integrations) {

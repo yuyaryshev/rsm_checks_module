@@ -18,6 +18,7 @@ function findIntegrations(sys: System, searchA: RsmObjectSearch, searchB: RsmObj
 export const cl2Validator: SystemValidator = {
     validatorId: "e746afab-b1e1-4b48-a2b7-24981839c9a8",
     validatorType: "System",
+    validatorSets: ["before_vision_approval"],
     name: "Должен присутствовать CL2, если есть Альфа-мобайл",
     description: "Должен присутствовать CL2, если есть Альфа-мобайл",
     validatorFunc: (sys: System, errors: ValidationError[]) => {

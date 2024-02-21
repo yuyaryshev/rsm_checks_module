@@ -42,6 +42,7 @@ describe("rsm_checks_module/validation_service/tests/request1.test.ts", () => {
 
             {
                 const request: typeof validateApi.request = {
+                    validatorSet: "before_vision_approval",
                     objects: [
                         {
                             id: "sysid_NIB",
